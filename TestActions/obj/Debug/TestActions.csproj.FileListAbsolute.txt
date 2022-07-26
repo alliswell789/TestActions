@@ -1,0 +1,8 @@
+C:\Users\munis\source\repos\TestActions\TestActions\bin\Debug\TestActions.exe.config
+C:\Users\munis\source\repos\TestActions\TestActions\bin\Debug\TestActions.exe
+C:\Users\munis\source\repos\TestActions\TestActions\bin\Debug\TestActions.pdb
+C:\Users\munis\source\repos\TestActions\TestActions\obj\Debug\TestActions.csproj.AssemblyReference.cache
+C:\Users\munis\source\repos\TestActions\TestActions\obj\Debug\TestActions.csproj.SuggestedBindingRedirects.cache
+C:\Users\munis\source\repos\TestActions\TestActions\obj\Debug\TestActions.csproj.CoreCompileInputs.cache
+C:\Users\munis\source\repos\TestActions\TestActions\obj\Debug\TestActions.exe
+C:\Users\munis\source\repos\TestActions\TestActions\obj\Debug\TestActions.pdb
