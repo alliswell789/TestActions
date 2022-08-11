@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+       
     - name: Zip Folder
       run: zip -r release.zip . -x ".git/*" ".github/*"
     - name: Release to Github
@@ -17,8 +18,8 @@ jobs:
     - name: Step 3 - Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v2
       with: 
-          name: assets-for-download
-          path: downloads
+          name: release.zip
+          
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
