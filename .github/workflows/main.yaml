@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-       
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: Zip Folder
       run: zip -r release-${{ steps.date.outputs.date }}.zip . -x ".git/*" ".github/*"
     - name: Release to Github
