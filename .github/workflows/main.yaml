@@ -20,11 +20,25 @@ jobs:
       with: 
           name: release
           path: release.zip
-    - name: Upload to S3 as artifact
-      uses: medlypharmacy/s3-artifacts-action@master
+    - name: Sourcetoad - AWS CodeDeploy for GitHub Actions
+      uses: sourcetoad/aws-codedeploy-action@v1.3.0
       with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_s3_bucket_name: "githubactionpoc"
-          source_path: 'release.zip'
+    # AWS Access Key (Required if no aws-actions/configure-aws-credentials)
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    # AWS Secret Key (Required if no aws-actions/configure-aws-credentials)
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    # S3 Bucket for CodeDeploy Assets
+        s3_bucket: "githubactionpoc"
+    # AWS CodeDeploy Application Name
+        codedeploy_name: "test"
+    # AWS CodeDeploy Application Group
+        codedeploy_group: "test"
+        
+    #- name: Upload to S3 as artifact
+   # uses: medlypharmacy/s3-artifacts-action@master
+    #  with:
+     #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #    aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+       #   aws_s3_bucket_name: "githubactionpoc"
+        #  source_path: 'release.zip'
    
