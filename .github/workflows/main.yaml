@@ -28,7 +28,7 @@ jobs:
        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws_s3_bucket_name: "githubactionpoc"
        source_path: 'release.zip'
-       destination_path: './release.zip'
+       destination_path: 'release.zip'
        
           
     - name: Configure AWS credentials
@@ -53,7 +53,7 @@ jobs:
       run: |
           aws deploy create-deployment  \
           --application-name testactions    --deployment-group development  \
-          --s3-location bucket=githubactionpoc,bundleType=zip,key=release.zip
+          --s3-location bucket=githubactionpoc,bundleType=zip,key=TestActions/release.zip
         
         
         
