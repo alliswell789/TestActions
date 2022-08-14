@@ -64,16 +64,14 @@ jobs:
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
     
-    # - name: Create CodeDeploy Deployment test
-     # id: deploy
-      #run: |
-       # aws deploy create-deployment \
-      # --application-name testactions \
-       # --deployment-group development \
-        #--deployment-config-name CodeDeployDefault.AllAtOnce \
-        #--revision revisionType=S3,s3Location={bucket=githubactionpoc,bundleType=zip,key=TestActions/main/34.zip}
-        #--s3-location "bucket=githubactionpoc,bundleType=zip,key=TestActions/main/26.zip"
-        
+      
+      
+      - name: Create CodeDeploy Deployment test
+        id: deployfroms3test
+        run: |
+          aws deploy create-deployment  \
+          --application-name testactions    --deployment-group development  \
+          --s3-location bucket=githubactionpoc,bundleType=zip,key=release.zip
         
         # aws deploy create-deployment \
         # --application-name HelloWorld_App \
