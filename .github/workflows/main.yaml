@@ -46,9 +46,9 @@ jobs:
       id: deploy
       run: |
         aws deploy create-deployment \
-        –application-name testactions \
-        –deployment-group-name development \
+        –application-name "testactions" \
+        –deployment-group-name "development" \
         –deployment-config-name CodeDeployDefault.AllAtOnce \
-        –s3-location bucket=githubactionpoc,key=release.zip
+        –s3-location bucket="githubactionpoc",key="release.zip"
         
         
