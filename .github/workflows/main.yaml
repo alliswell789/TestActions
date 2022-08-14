@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v1
     
     - name: Zip Folder
-      run: zip -r release.zip . -x ".git/*" ".github/*"
+      run: zip -r release_$commit_hash.zip . -x ".git/*" ".github/*"
       
     - name: Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v2
@@ -27,8 +27,8 @@ jobs:
        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws_s3_bucket_name: "githubactionpoc"
-       source_path: 'release.zip'
-       destination_path: 'release.zip'
+       source_path: release_$commit_hash.zip
+       destination_path: release_$commit_hash.zip'
        
           
     - name: Configure AWS credentials
@@ -53,7 +53,7 @@ jobs:
       run: |
           aws deploy create-deployment  \
           --application-name testactions    --deployment-group development  \
-          --s3-location bucket=githubactionpoc,bundleType=zip,key=TestActions/release.zip
+          --s3-location bucket=githubactionpoc,bundleType=zip,key=TestActions/release_$commit_hash.zip
         
         
         
