@@ -32,7 +32,7 @@ jobs:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_s3_bucket_name: "githubactionpoc"
-        source_path: 'release-${{ steps.date.outputs.date }}.zip'
+        source_path: 'release.zip'
         #source_path: 'release-${{ steps.date.outputs.date }}.zip'
         
     - name: Configure AWS credentials
