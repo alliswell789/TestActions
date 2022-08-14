@@ -55,14 +55,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
      # Step 2
-      - name: Create CodeDeploy Deployment
-        id: deploy
-        run: |
-          aws deploy create-deployment \
-            --application-name testactions \
-            --deployment-group-name development \
-            --deployment-config-name CodeDeployDefault.AllAtOnce \
-            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+     # - name: Create CodeDeploy Deployment
+     #   id: deploy
+     #   run: |
+     #     aws deploy create-deployment \
+     #       --application-name testactions \
+     #       --deployment-group-name development \
+     #       --deployment-config-name CodeDeployDefault.AllAtOnce \
+     #       --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
     
       
       
