@@ -12,7 +12,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: Get commitid
       id: commitid
-      run: echo "::set-output name=commit::$(git rev-parse --short "$GITHUB_SHA")"
+      #run: echo "::set-output name=commit::$(git rev-parse --short "$GITHUB_SHA")" steps.vars.outputs.sha_short
+      run: echo "::set-output name=commit::$(git rev-parse --short HEAD)"
     - name: Zip Folder
       run: zip -r release_${{ steps.commitid.outputs.commit }}.zip . -x ".git/*" ".github/*"
       
