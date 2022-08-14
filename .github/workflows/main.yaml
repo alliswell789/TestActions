@@ -14,14 +14,16 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: Zip Folder
-      run: zip -r release-${{ steps.date.outputs.date }}.zip . -x ".git/*" ".github/*"
+      #run: zip -r release-${{ steps.date.outputs.date }}.zip . -x ".git/*" ".github/*"
+      run: zip -r release.zip . -x ".git/*" ".github/*"
     - name: Release to Github
       run: echo "Release"
     - name: Step 3 - Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v2
       with: 
           name: release
-          path: release-${{ steps.date.outputs.date }}.zip
+          path: release.zip
+          # path: release-${{ steps.date.outputs.date }}.zip
    
         
     - name: Upload to S3 as artifact
@@ -31,4 +33,22 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_s3_bucket_name: "githubactionpoc"
         source_path: 'release-${{ steps.date.outputs.date }}.zip'
-   
+        #source_path: 'release-${{ steps.date.outputs.date }}.zip'
+        
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        
+    - name: Create CodeDeploy Deployment test
+      id: deploy
+      run: |
+        aws deploy create-deployment \
+        –application-name testactions \
+        –deployment-group-name development \
+        –deployment-config-name CodeDeployDefault.AllAtOnce \
+        –s3-location bucket=githubactionpoc,key=release.zip
+        
+        
