@@ -10,15 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    
+    - name: Get commitid
+      id: commitid
+      run: echo "::set-output name=commit::$(git rev-parse --short "$GITHUB_SHA")"
     - name: Zip Folder
-      run: zip -r release_$(git rev-parse --short "$GITHUB_SHA").zip . -x ".git/*" ".github/*"
+      run: zip -r release_${{ steps.commitid.outputs.commit }}.zip . -x ".git/*" ".github/*"
       
     - name: Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v2
       with: 
           name: release
-          path: release_$(git rev-parse --short "$GITHUB_SHA").zip
+          path: release_${{ steps.commitid.outputs.commit }}.zip
                     
            
     - name: Upload to S3 as artifact
@@ -27,8 +29,8 @@ jobs:
        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws_s3_bucket_name: "githubactionpoc"
-       source_path: release_$(git rev-parse --short "$GITHUB_SHA").zip
-       destination_path: release_$(git rev-parse --short "$GITHUB_SHA").zip'
+       source_path: release_${{ steps.commitid.outputs.commit }}.zip
+       destination_path: release_${{ steps.commitid.outputs.commit }}.zip'
        
           
     - name: Configure AWS credentials
@@ -53,7 +55,7 @@ jobs:
       run: |
           aws deploy create-deployment  \
           --application-name testactions    --deployment-group development  \
-          --s3-location bucket=githubactionpoc,bundleType=zip,key=TestActions/release_$(git rev-parse --short "$GITHUB_SHA").zip
+          --s3-location bucket=githubactionpoc,bundleType=zip,key=TestActions/release_${{ steps.commitid.outputs.commit }}.zip
         
         
         
