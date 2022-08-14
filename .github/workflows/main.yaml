@@ -10,21 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    
     - name: Zip Folder
-      #run: zip -r release-${{ steps.date.outputs.date }}.zip . -x ".git/*" ".github/*"
       run: zip -r release.zip . -x ".git/*" ".github/*"
-    - name: Release to Github
-      run: echo "Release"
-    - name: Step 3 - Use the Upload Artifact GitHub Action
+      
+    - name: Use the Upload Artifact GitHub Action
       uses: actions/upload-artifact@v2
       with: 
           name: release
           path: release.zip
-          # path: release-${{ steps.date.outputs.date }}.zip
-          
+                    
     - name: Upload to S3 as artifact
       uses: jakejarvis/s3-sync-action@master
       with:
@@ -33,16 +28,7 @@ jobs:
         AWS_S3_BUCKET: "githubactionpoc"
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
-    #- name: Upload to S3 as artifact
-     # uses: medlypharmacy/s3-artifacts-action@master
-      #with:
-       # aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #aws_s3_bucket_name: "githubactionpoc"
-        #source_path: 'release.zip'
-        #source_path: 'release-${{ steps.date.outputs.date }}.zip'
-        
+          
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -50,41 +36,23 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
         
- continuous-deployment:
-    runs-on: ubuntu-latest
-    #needs: [continuous-integration]
-    # if: github.ref == 'refs/heads/main'
-    steps:
-     # Step 1
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
+ 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-     # Step 2
-     # - name: Create CodeDeploy Deployment
-     #   id: deploy
-     #   run: |
-     #     aws deploy create-deployment \
-     #       --application-name testactions \
-     #       --deployment-group-name development \
-     #       --deployment-config-name CodeDeployDefault.AllAtOnce \
-     #       --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
-    
+       
       
       
-      - name: Create CodeDeploy Deployment test
-        id: deployfroms3test
-        run: |
+    - name: Create CodeDeploy Deployment test
+      id: deployfroms3test
+      run: |
           aws deploy create-deployment  \
           --application-name testactions    --deployment-group development  \
           --s3-location bucket=githubactionpoc,bundleType=zip,key=release.zip
         
-        # aws deploy create-deployment \
-        # --application-name HelloWorld_App \
-        # --deployment-config-name CodeDeployDefault.OneAtATime \
-        # --deployment-group-name HelloWorld_DepGroup \
-        # --s3-location bucket=codedeploydemobucket,bundleType=zip,key=HelloW.zip
+        
         
         
