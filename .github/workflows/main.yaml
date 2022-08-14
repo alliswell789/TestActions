@@ -50,7 +50,7 @@ jobs:
         --deployment-group development \
         #--deployment-config-name CodeDeployDefault.AllAtOnce \
         #--revision revisionType=S3,s3Location={bucket=githubactionpoc,bundleType=zip,key=release.zip}
-        --s3-location "bucket=githubactionpoc,bundleType=zip,key=release.zip"
+        --s3-location "bucket=githubactionpoc,bundleType=zip,key=TestActions/main/26.zip"
         
         
         # aws deploy create-deployment \
