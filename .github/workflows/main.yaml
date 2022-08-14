@@ -46,9 +46,16 @@ jobs:
       id: deploy
       run: |
         aws deploy create-deployment \
-        --application-name "testactions" \
-        --deployment-group-name "development" \
+        --application-name testactions \
+        --deployment-group-name development \
         --deployment-config-name CodeDeployDefault.AllAtOnce \
-        –-s3-location bucket="githubactionpoc",key="release.zip"
+        –-s3-location bucket=githubactionpoc,bundleType=zip,key=release.zip
+        
+        
+        # aws deploy create-deployment \
+        # --application-name HelloWorld_App \
+        # --deployment-config-name CodeDeployDefault.OneAtATime \
+        # --deployment-group-name HelloWorld_DepGroup \
+        # --s3-location bucket=codedeploydemobucket,bundleType=zip,key=HelloWorld_App.zip
         
         
