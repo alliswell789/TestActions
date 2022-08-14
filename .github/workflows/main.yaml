@@ -28,6 +28,7 @@ jobs:
        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws_s3_bucket_name: "githubactionpoc"
        source_path: 'release.zip'
+       destination_path: 'release.zip'
        
           
     - name: Configure AWS credentials
