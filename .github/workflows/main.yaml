@@ -49,7 +49,7 @@ jobs:
         --application-name testactions \
         --deployment-group development \
         #--deployment-config-name CodeDeployDefault.AllAtOnce \
-        --revision revisionType=S3,s3Location={bucket=githubactionpoc,bundleType=zip,key=TestActions/main/26.zip}
+        --revision revisionType=S3,s3Location={bucket=githubactionpoc,bundleType=zip,key=TestActions/main/34.zip}
         #--s3-location "bucket=githubactionpoc,bundleType=zip,key=TestActions/main/26.zip"
         
         
